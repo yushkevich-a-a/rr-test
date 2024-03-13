@@ -1,6 +1,10 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
-import { getContacts } from "../contacts";
+import { Form, Link, NavLink, Outlet, redirect, useLoaderData } from "react-router-dom";
+import { getContacts, createContact } from "../contacts";
 
+export async function action() {
+  const contact = await createContact();
+  return redirect(`/contacts/${contact.id}/edit`);
+}
 export async function loader() {
   const contacts = await getContacts();
   return { contacts };
@@ -31,9 +35,9 @@ export function Root() {
                 aria-live="polite"
               ></div>
             </form>
-            <form method="post">
+            <Form method="post">
               <button type="submit">New</button>
-            </form>
+            </Form>
           </div>
           <nav>
             {
@@ -42,14 +46,23 @@ export function Root() {
                   {
                     contacts.map( contact => (
                       <li key={contact.id}>
-                        <Link to={`/contacts/${contact.id}`}>
+                        <NavLink 
+                          to={`/contacts/${contact.id}`}
+                          className={({isActive, isPending}) =>
+                            isActive
+                              ? 'active'
+                              : isPending
+                              ? 'pendding'
+                              : ''
+                          }
+                        >
                           {(contact.first || contact.last) ? (
                             <>{contact.first} {contact.last}</>
                           ) : (
                             <>No name</>
                           )}{"  "}
                           { contact.favorite && <span>*</span> }
-                          </Link>
+                          </NavLink>
                       </li>
                       )
                     )
