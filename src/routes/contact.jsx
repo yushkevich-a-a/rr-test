@@ -1,5 +1,7 @@
-import { Form, useFetcher, useLoaderData } from "react-router-dom";
+import { Form, useFetcher, useFormAction, useLoaderData } from "react-router-dom";
 import { getContact, updateContact } from "../contacts";
+import { DeleteButton } from "../components/DeleteButton";
+import { EditButton } from "../components/EditButton";
 
 export async function loader({ params }) {
     const contact = await getContact(params.contactId);
@@ -21,7 +23,6 @@ export async function action({ request, params }) {
 
 export function Contact() {
     const {contact} = useLoaderData();
-
   return (
     <div id="contact">
       <div>
@@ -56,23 +57,9 @@ export function Contact() {
         {contact.notes && <p>{contact.notes}</p>}
 
         <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-          <Form
-            method="post"
-            action="destroy"
-            onSubmit={(event) => {
-              if (
-                !confirm(
-                  "Please confirm you want to delete this record."
-                )
-              ) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
+          <Form >
+            <EditButton />
+            <DeleteButton />
           </Form>
         </div>
       </div>
