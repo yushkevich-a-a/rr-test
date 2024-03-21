@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import "./index.css";
 import {
 	Root,
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		loader: rootLoader,
 		action: rootAction,
+		handle: {
+			crumb: (path: string, name: string) => <Link to={path}>root</Link>,
+		},
+		id: "root",
 		children: [
 			{
 				errorElement: <ErrorPage />,
@@ -38,6 +42,17 @@ const router = createBrowserRouter([
 						element: <Contact />,
 						loader: contactLoader,
 						action: contactAction,
+						handle: {
+							crumb: (path: string, name: string) => (
+								<Link to={path}>contact-{name}</Link>
+							),
+						},
+						// children: [
+						// 	{
+						// 		path: "/contacts/:contactId/layer",
+						// 		element: <Layer2 />,
+						// 	},
+						// ],
 					},
 					{
 						path: "/contacts/:contactId/edit",

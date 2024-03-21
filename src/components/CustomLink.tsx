@@ -1,17 +1,19 @@
 import {
 	HTMLAttributeAnchorTarget,
 	MouseEventHandler,
+	ReactNode,
 	forwardRef,
 } from "react";
 import { To, useHref, useLinkClickHandler } from "react-router-dom";
 import styled from "styled-components";
 
 type TCustomLink = {
-	onClick: MouseEventHandler;
+	onClick: MouseEventHandler<HTMLAnchorElement>;
 	replace?: boolean;
 	state: any;
 	target: HTMLAttributeAnchorTarget;
 	to: To;
+	children?: ReactNode;
 };
 
 const StyledLink = styled.a`
@@ -20,7 +22,15 @@ const StyledLink = styled.a`
 
 export const CustomLink = forwardRef(
 	(
-		{ onClick, replace = false, state, target, to, ...rest }: TCustomLink,
+		{
+			onClick,
+			replace = false,
+			state,
+			target,
+			to,
+			children,
+			...rest
+		}: TCustomLink,
 		ref
 	) => {
 		let href = useHref(to);
@@ -42,7 +52,9 @@ export const CustomLink = forwardRef(
 				}}
 				ref={ref as any}
 				target={target}
-			></StyledLink>
+			>
+				{children}
+			</StyledLink>
 		);
 	}
 );

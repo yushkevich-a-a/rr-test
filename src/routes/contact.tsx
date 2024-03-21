@@ -2,6 +2,7 @@ import {
 	ActionFunctionArgs,
 	Form,
 	LoaderFunctionArgs,
+	Outlet,
 	useFetcher,
 	useFormAction,
 	useLoaderData,
@@ -82,14 +83,17 @@ function Favorite({ contact }: { contact: TContact }) {
 	}
 
 	return (
-		<fetcher.Form method="post">
-			<button
-				name="favorite"
-				value={favorite ? "false" : "true"}
-				aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-			>
-				{favorite ? "★" : "☆"}
-			</button>
-		</fetcher.Form>
+		<>
+			<fetcher.Form method="post">
+				<button
+					name="favorite"
+					value={favorite ? "false" : "true"}
+					aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+				>
+					{favorite ? "★" : "☆"}
+				</button>
+			</fetcher.Form>
+			<Outlet />
+		</>
 	);
 }

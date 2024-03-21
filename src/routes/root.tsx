@@ -1,5 +1,6 @@
 import {
 	Form,
+	Link,
 	LoaderFunctionArgs,
 	NavLink,
 	Outlet,
@@ -7,14 +8,19 @@ import {
 	useHref,
 	useInRouterContext,
 	useLoaderData,
+	useLocation,
+	useMatch,
+	useMatches,
 	useNavigation,
 	useResolvedPath,
 	useSubmit,
 } from "react-router-dom";
 
-import { useEffect } from "react";
+import { MouseEvent, useEffect } from "react";
 import { createContact, getContacts } from "../contacts";
 import { TContact } from "../types";
+import { CustomLink } from "../components/CustomLink";
+import { BreadCrumps } from "./breadCrumps";
 
 export async function action() {
 	const contact = await createContact();
@@ -35,6 +41,8 @@ export function Root() {
 		q: string | null;
 	};
 	const navigation = useNavigation();
+	const location = useLocation();
+	const matches = useMatches();
 	const submit = useSubmit();
 
 	const searching =
@@ -49,10 +57,26 @@ export function Root() {
 		element.value = q || "";
 	}, [q]);
 
+	console.log(location);
+
 	return (
 		<>
 			<div id="sidebar">
 				<h1>React Router Contacts</h1>
+				<div>
+					{location.pathname !== "/" && (
+						<CustomLink
+							onClick={(event) => {
+								console.log("matches: ", matches);
+							}}
+							state={"ready"}
+							target={"_self"}
+							to={"/"}
+						>
+							к списку
+						</CustomLink>
+					)}
+				</div>
 				<div>
 					<Form id="search-form" role="search">
 						<input
@@ -112,6 +136,7 @@ export function Root() {
 				id="detail"
 				className={navigation.state === "loading" ? "loading" : ""}
 			>
+				<BreadCrumps />
 				<Outlet />
 			</div>
 		</>
