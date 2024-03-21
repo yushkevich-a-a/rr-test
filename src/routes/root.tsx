@@ -11,6 +11,7 @@ import {
 	useLocation,
 	useMatch,
 	useMatches,
+	useNavigate,
 	useNavigation,
 	useResolvedPath,
 	useSubmit,
@@ -40,6 +41,7 @@ export function Root() {
 		contacts: any[];
 		q: string | null;
 	};
+	const navigatе = useNavigate();
 	const navigation = useNavigation();
 	const location = useLocation();
 	const matches = useMatches();
@@ -57,13 +59,25 @@ export function Root() {
 		element.value = q || "";
 	}, [q]);
 
-	console.log(location);
-
 	return (
 		<>
 			<div id="sidebar">
 				<h1>React Router Contacts</h1>
 				<div>
+					<div
+						onClick={() => {
+							navigatе(-1);
+						}}
+					>
+						-1
+					</div>
+					<div
+						onClick={() => {
+							navigatе(1);
+						}}
+					>
+						+
+					</div>
 					{location.pathname !== "/" && (
 						<CustomLink
 							onClick={(event) => {

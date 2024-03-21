@@ -38,7 +38,6 @@ export const BreadCrumps = () => {
 			if (!handle) {
 				return false;
 			}
-			console.log("match in ", match);
 			const path = match.pathname;
 			const params = match.params as any;
 			let id = (params.contactId || "") as string;

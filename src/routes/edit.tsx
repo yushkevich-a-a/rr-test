@@ -4,6 +4,8 @@ import {
 	redirect,
 	useLoaderData,
 	useNavigate,
+	useNavigationType,
+	useOutlet,
 } from "react-router-dom";
 import { updateContact } from "../contacts";
 import { TContact } from "../types";
@@ -21,6 +23,11 @@ export async function action({ request, params }: ActionFunctionArgs) {
 export function EditContact() {
 	const { contact } = useLoaderData() as { contact: TContact };
 	const navigate = useNavigate();
+	const outlet = useOutlet();
+	const typeNav = useNavigationType();
+
+	console.log("navigationType: " + typeNav);
+
 	return (
 		<Form method="post" id="contact-form">
 			<p>

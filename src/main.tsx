@@ -16,7 +16,6 @@ import ErrorPage from "./error-page";
 import { EditContact, action as editAction } from "./routes/edit";
 import { action as deleteAction } from "./routes/destroy";
 import Index from "./routes";
-import { App } from "./routes/app";
 
 const router = createBrowserRouter([
 	{
@@ -47,12 +46,6 @@ const router = createBrowserRouter([
 								<Link to={path}>contact-{name}</Link>
 							),
 						},
-						// children: [
-						// 	{
-						// 		path: "/contacts/:contactId/layer",
-						// 		element: <Layer2 />,
-						// 	},
-						// ],
 					},
 					{
 						path: "/contacts/:contactId/edit",
@@ -73,8 +66,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<App>
-			<RouterProvider router={router} />
-		</App>
+		<RouterProvider router={router} />
 	</React.StrictMode>
 );
