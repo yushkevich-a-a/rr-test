@@ -1,10 +1,9 @@
 import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
+import { TContact } from "./types";
 
-type TContact = Record<string, boolean | undefined>
-
-export async function getContacts(query: string | null): Promise<TContact[]> {
+export async function getContacts(query?: string | null): Promise<TContact[]> {
   await fakeNetwork(`getContacts:${query}`);
   let contacts = await localforage.getItem("contacts") as any[];
   if (!contacts) contacts = [];
@@ -24,25 +23,25 @@ export async function createContact() {
   return contact;
 }
 
-export async function getContact(id) {
+export async function getContact(id?: string ) {
   await fakeNetwork(`contact:${id}`);
-  let contacts = await localforage.getItem("contacts");
+  let contacts = await localforage.getItem("contacts") as TContact[];
   let contact = contacts.find(contact => contact.id === id);
   return contact ?? null;
 }
 
-export async function updateContact(id, updates) {
+export async function updateContact(id: string, updates: Partial<TContact>) {
   await fakeNetwork();
-  let contacts = await localforage.getItem("contacts");
+  let contacts = await localforage.getItem("contacts") as TContact[];
   let contact = contacts.find(contact => contact.id === id);
-  if (!contact) throw new Error("No contact found for", id);
+  if (!contact) throw new Error("No contact found for" + id);
   Object.assign(contact, updates);
   await set(contacts);
   return contact;
 }
 
-export async function deleteContact(id) {
-  let contacts = await localforage.getItem("contacts");
+export async function deleteContact(id: string) {
+  let contacts = await localforage.getItem("contacts")  as TContact[];
   let index = contacts.findIndex(contact => contact.id === id);
   if (index > -1) {
     contacts.splice(index, 1);
@@ -52,7 +51,7 @@ export async function deleteContact(id) {
   return false;
 }
 
-function set(contacts) {
+function set(contacts: TContact[]) {
   return localforage.setItem("contacts", contacts);
 }
 
@@ -64,11 +63,11 @@ async function fakeNetwork(key?: string ) {
     fakeCache = {};
   }
 
-  if (fakeCache[key]) {
+  if (!!key && fakeCache[key]) {
     return;
   }
 
-  fakeCache[key] = true;
+  !!key && (fakeCache[key] = true);
   console.log(fakeCache)
   return new Promise(res => {
     setTimeout(res, Math.random() * 800);

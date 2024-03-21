@@ -11,6 +11,9 @@ import { TContact } from "../types";
 export async function action({ request, params }: ActionFunctionArgs) {
 	const formData = await request.formData();
 	const updates = Object.fromEntries(formData);
+	if (!params.contactId) {
+		return;
+	}
 	await updateContact(params.contactId, updates);
 	return redirect(`/contacts/${params.contactId}`);
 }

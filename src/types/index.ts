@@ -1,7 +1,10 @@
 export type TContact = {
-  first: string;
-  last: string;
-  twitter: string;
-  avatar: string;
-  notes: string;
+  id: string; 
+  createdAt: number;
+  first?: string;
+  last?: string;
+  twitter?: string;
+  avatar?: string;
+  notes?: string;
+  favorite? : boolean;
 }

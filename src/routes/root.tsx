@@ -14,6 +14,7 @@ import {
 
 import { useEffect } from "react";
 import { createContact, getContacts } from "../contacts";
+import { TContact } from "../types";
 
 export async function action() {
 	const contact = await createContact();
@@ -21,7 +22,7 @@ export async function action() {
 }
 export async function loader({
 	request,
-}: LoaderFunctionArgs): Promise<{ contacts: any[]; q: string | null }> {
+}: LoaderFunctionArgs): Promise<{ contacts: TContact[]; q: string | null }> {
 	const url = new URL(request.url);
 	const q = url.searchParams.get("q");
 	const contacts = await getContacts(q);
