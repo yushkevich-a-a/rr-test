@@ -1,11 +1,13 @@
 import {
 	ActionFunctionArgs,
 	Form,
+	Outlet,
 	redirect,
 	useLoaderData,
 	useNavigate,
 	useNavigationType,
 	useOutlet,
+	useParams,
 } from "react-router-dom";
 import { updateContact } from "../contacts";
 import { TContact } from "../types";
@@ -24,9 +26,9 @@ export function EditContact() {
 	const { contact } = useLoaderData() as { contact: TContact };
 	const navigate = useNavigate();
 	const outlet = useOutlet();
-	const typeNav = useNavigationType();
+	const params = useParams();
 
-	console.log("navigationType: " + typeNav);
+	console.dir("params ", params);
 
 	return (
 		<Form method="post" id="contact-form">
@@ -81,6 +83,7 @@ export function EditContact() {
 					Cancel
 				</button>
 			</p>
+			<Outlet />
 		</Form>
 	);
 }

@@ -5,6 +5,7 @@ import {
 	NavLink,
 	Outlet,
 	redirect,
+	resolvePath,
 	useHref,
 	useInRouterContext,
 	useLoaderData,
@@ -14,6 +15,7 @@ import {
 	useNavigate,
 	useNavigation,
 	useResolvedPath,
+	useSearchParams,
 	useSubmit,
 } from "react-router-dom";
 
@@ -45,7 +47,11 @@ export function Root() {
 	const navigation = useNavigation();
 	const location = useLocation();
 	const matches = useMatches();
+	const search = useSearchParams();
 	const submit = useSubmit();
+	const dataPath = useResolvedPath(".");
+
+	console.log("resolvePath: ", resolvePath);
 
 	const searching =
 		navigation.location &&

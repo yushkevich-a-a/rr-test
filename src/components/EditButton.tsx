@@ -1,10 +1,16 @@
-import React from "react";
-import { useFormAction } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // тестирование работы экшена с помощью хука
 export const EditButton = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		navigate(`${location.pathname}/edit`);
+	};
+
 	return (
-		<button type="submit" formAction={useFormAction("edit")} formMethod="post">
+		<button formMethod="post" onClick={handleClick}>
 			edit
 		</button>
 	);

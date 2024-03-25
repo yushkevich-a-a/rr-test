@@ -52,6 +52,12 @@ const router = createBrowserRouter([
 						element: <EditContact />,
 						loader: contactLoader,
 						action: editAction,
+						children: [
+							{
+								path: "/contacts/:contactId/edit/some",
+								element: <div>Привет мир</div>,
+							},
+						],
 					},
 					{
 						path: "/contacts/:contactId/destroy",

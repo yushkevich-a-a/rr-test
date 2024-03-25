@@ -63,8 +63,8 @@ export function Contact() {
 				{contact.notes && <p>{contact.notes}</p>}
 
 				<div>
+					<EditButton />
 					<Form>
-						<EditButton />
 						<DeleteButton />
 					</Form>
 				</div>
